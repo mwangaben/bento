@@ -8,7 +8,7 @@
         
         <div class="container">
             <h1>Hello World from the MacBookAir</h1>
-            <div class="col-md-8">
+            <div class="col-md-8 reds">
                 <h2>I am so glad to day brothers</h2>
             </div>
             <div class="col-md-4">
