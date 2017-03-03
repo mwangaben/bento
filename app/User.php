@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Customer;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
+    public function add($name)
+    {
+        return $this->customers()->save($name);
+    }
+
+    public function count()
+    {
+        return $this->customers()->count();
+    }
 }
