@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Customer;
+use App\Traits\Roling;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Roling;
 
     /**
      * The attributes that are mass assignable.
