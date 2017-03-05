@@ -11,6 +11,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class RoleTest extends TestCase
 {
+    use DatabaseTransactions, DatabaseMigrations;
+    
+    
     /** @test **/
     public function it_create_role_name()
     {
