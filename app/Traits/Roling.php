@@ -8,19 +8,28 @@ use App\Role;
 trait Roling {
     
     public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+    
+    public function roled(){
         return $this->hasMany(Role::class);
     }
     
-    public function beThe($role){
-        return $this->roles()->save($role);
+    public function makeRole($data){
+        return $this->roled()->save($data);
     }
     
-    public function thenBe($id, $data){
-        return $this->roles()->where('id', $id)->update($data);
+    
+    public function beThe($roleId){
+        return $this->roles()->attach($roleId);
     }
     
-    public function noMore($id){
-        return $this->roles()->where('id',$id)->delete();
+    public function thenBe($roleId){
+        return $this->roles()->sync($roleId);
+    }
+    
+    public function noMore($roleId){
+        return $this->roles()->detach($roleId);
     }
 }
 ?>

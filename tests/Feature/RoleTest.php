@@ -17,35 +17,40 @@ class RoleTest extends TestCase
     /** @test **/
     public function it_create_role_name()
     {
-        $role = factory(Role::class)->make(['name' => 'Admin']);
+        $role = factory(Role::class)->make();
         $user = factory(User::class)->create();
         
-        $user->beThe($role);
+        $user->makeRole($role);
+        $user->beThe($role->id);
         
-        $this->assertDatabaseHas('roles',['name' => 'Admin']);
+        $this->assertDatabaseHas('role_user',['user_id' => $user->id, 'role_id' => $role->id]);
     }
     
     /** @test **/
     public function it_can_delete_the_role(){
-        $role = factory(Role::class)->make(['name' => 'Admin']);
+        $role = factory(Role::class)->make();
         $user = factory(User::class)->create();
         
-        $user->beThe($role);
+        $user->makeRole($role);
+        $user->beThe($role->id);
         $user->noMore($role->id);
         
-        $this->assertDatabaseMissing('roles',['name' => 'Admin']);
+        $this->assertDatabaseMissing('role_user',['role_id' => $role->id, 'user_id' => $user->id]);
     }
     
     /** @test **/
     public function it_can_edit_the_role(){
         $role = factory(Role::class)->make(['name' => 'Admin']);
+        $role2 = factory(Role::class)->make(['name' => 'Author']);
+        
         $user = factory(User::class)->create();
         
-        $user->beThe($role);
-        $data = ['name' => 'Author'];
-        $user->thenBe($role->id, $data);
+        $user->makeRole($role);
+        $user->makeRole($role2);
+        $user->beThe($role->id);
+        $user->thenBe([$role2->id]);
         
-        $this->assertDatabaseHas('roles',['name' => $data['name']]);
+        $this->assertDatabaseHas('role_user',['user_id' => $user->id, 'role_id' => $role2->id]);
     }
         
     
